@@ -41,7 +41,7 @@ public class CpuScheduingAlgorithm {
         // updating objects "Process" with the Priority
         for (int i = 0; i < numberOfTasks; i++) {
             int priority = scanner.nextInt();
-            processes[i].priority = priority;
+            processes[i].priority =  priority; // Lowest Input is the largest.
         }
         
         
@@ -55,7 +55,7 @@ public class CpuScheduingAlgorithm {
         
         
        Queue test = new Queue(processes);
-       test.SJF();
+       test.prioritySchdeduling();
     }
     
 }
