@@ -8,4 +8,9 @@ public class Process {
     int arrivalTime;
     int burstTime;
     int priority;
+    
+    Process() {
+        
+    }
 }
+
