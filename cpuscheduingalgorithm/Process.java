@@ -12,5 +12,13 @@ public class Process {
     Process() {
         
     }
+
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public int getBurstTime() {
+        return burstTime;
+    }
 }
 

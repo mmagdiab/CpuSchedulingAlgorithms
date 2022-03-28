@@ -1,5 +1,8 @@
 package cpuscheduingalgorithm;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  *
  * @author Mohamed Magdy
@@ -21,11 +24,6 @@ public class Queue {
         
         // Loop through the processes
         for (int i = 1 ; i < numberOfTasks; i++) {
-            
-            
-            // Fetch last working time
-            
-            System.out.println("Last Active time:" + lastActiveTime);
             // Check whether the system was idle
             if (processes[i].arrivalTime > lastActiveTime) {
                 // Update total Idle time
@@ -35,16 +33,23 @@ public class Queue {
             }
             else {
             // Updating watiting time
-                System.out.println(lastActiveTime+"-"+processes[i].arrivalTime);
             waitingTime += (lastActiveTime - processes[i].arrivalTime);
             }
            
             // Update last active time
             lastActiveTime += processes[i].burstTime;
         }
+        
+        // GET RESULTS
         System.out.println("Average waiting time: "+ (waitingTime/numberOfTasks));
         System.out.println("Idle Time: "+ idleTime);
     }
     
-
+    public void SJF() {
+        // Sort array based on arrival tme 
+        Arrays.sort(this.processes, Comparator.comparing(Process::getBurstTime));
+       
+        // Run the nomral First come First Served algorithm
+        FCFS();
+    }
 }

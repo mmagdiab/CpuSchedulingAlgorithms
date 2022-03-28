@@ -55,7 +55,7 @@ public class CpuScheduingAlgorithm {
         
         
        Queue test = new Queue(processes);
-       test.FCFS();
+       test.SJF();
     }
     
 }
