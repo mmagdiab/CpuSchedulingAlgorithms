@@ -127,4 +127,51 @@ public class Queue {
         System.out.println("Average waiting time: " + (waitingTime / numberOfTasks));
         System.out.println("Idle Time: " + idleTime);
     }
+
+    public void RRwithPriority(int quantum) {
+        // Sort array based on Priority from highest to lowest
+        Arrays.sort(this.processes, Comparator.comparing(Process::getPriority));
+
+        int numberOfTasks = processes.length;
+
+        // Check whether all process are finished
+        while (tasksFinished < numberOfTasks) {
+            // LOOP THROUGH EACH PROCESS
+            boolean processPicked = false;
+            for (int i = 0; i < numberOfTasks; i++) {
+                Process process = this.processes[i];
+                // MAKE SURE PROCESS ARRIVED AND NOT FINISHED YET
+                if ((process.arrivalTime <= currentTime) && process.burstTime > 0) {
+                    // PROCESS PICKED
+                    processPicked = true;
+                    // UPDATE WAITING TIME
+                    waitingTime += (currentTime - process.arrivalTime);
+                    // CPU WILL PROCESS AMOUNT OF TIME = MIN(Quantum, remaining burst time)
+                    int amountToBeProccessed = Math.min(quantum, process.burstTime);
+                    // UPDATE CURRENT TIME AND Remaining burst time 
+                    currentTime += amountToBeProccessed;
+                    process.burstTime -= amountToBeProccessed;
+                    // UPDATE NEW ARRIVAL TIME
+                    process.arrivalTime = currentTime;
+                    // IF PROCESS DONE, UPDATE NUMBER OF FINISHED TASKS
+                    if (process.burstTime == 0) {
+                        tasksFinished++;
+                    } else if (i+1 < numberOfTasks && (processes[i+1].priority == process.priority)) {
+                            continue;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            // IF no process arrived yet, increase idle time and current time
+            if (!processPicked) {
+                idleTime++;
+                currentTime++;
+            }
+        }
+        // GET RESULTS
+        System.out.println("Average waiting time: " + (waitingTime / numberOfTasks));
+        System.out.println("Idle Time: " + idleTime);
+    }
+
 }

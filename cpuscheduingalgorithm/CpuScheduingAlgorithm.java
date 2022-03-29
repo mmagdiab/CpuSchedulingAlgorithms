@@ -55,7 +55,7 @@ public class CpuScheduingAlgorithm {
         
         
        Queue test = new Queue(processes);
-       test.RR(4);
+       test.RRwithPriority(2);
     }
     
 }
