@@ -15,18 +15,17 @@ public class CpuScheduingAlgorithm {
         // TODO code application logic here
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to CPU Schdeuling Program......");
-        
+
         // Asking User to add number of tasks
         System.out.print("Please Enter number of tasks:");
         int numberOfTasks = scanner.nextInt();
         System.out.println(numberOfTasks);
         // Creating array of Process s
         Process[] processes = new Process[numberOfTasks];
-        
+
         // Asking User to Arrival time with this form: 25 4 30 5
         System.out.println("Please Enter \"Time of Arrival\" for each process one after than another then hit ENTER: ");
-        
-        
+
         // Looping through user input updating Process obj with the user input
         // updating objects "Process" with arrival times
         for (int i = 0; i < numberOfTasks; i++) {
@@ -35,27 +34,55 @@ public class CpuScheduingAlgorithm {
             int arrivalTime = scanner.nextInt();
             processes[i].arrivalTime = arrivalTime;
         }
-        
+
         System.out.println("Please Enter \"Priority\" for each process one after than another then hit ENTER: ");
-        
+
         // updating objects "Process" with the Priority
         for (int i = 0; i < numberOfTasks; i++) {
             int priority = scanner.nextInt();
-            processes[i].priority =  priority; // Lowest Input is the largest.
+            processes[i].priority = priority; // Lowest Input is the largest.
         }
-        
-        
+
         System.out.println("Please Enter \"Burst Time\" for each process one after than another then hit ENTER: ");
-        
+
         // updating objects "Process" with the Burst time
         for (int i = 0; i < numberOfTasks; i++) {
             int burstTime = scanner.nextInt();
             processes[i].burstTime = burstTime;
         }
-        
-        
-       Queue test = new Queue(processes);
-       test.RRwithPriority(2);
+
+        Queue test = new Queue(processes);
+        System.out.println("PLEASE SELECT THE ALGORITHM:");
+        System.out.println("1. FCFS");
+        System.out.println("2. SJF");
+        System.out.println("3. Priority Scheduling");
+        System.out.println("4. Round Robin");
+        System.out.println("5. Priority Scheduling with round robin");
+        System.out.print("Selection: ");    
+        int selection = scanner.nextInt();
+        switch (selection) {
+            case 1:
+                test.FCFS();
+                break;
+            case 2:
+                test.SJF();
+                break;
+            case 3:
+                test.prioritySchdeduling();
+                break;
+            case 4:
+                System.out.print("Please Enter Quantum value: ");
+                int quantum = scanner.nextInt();
+                test.RR(quantum);
+                break;
+            case 5:
+                System.out.print("Please Enter Quantum value: ");
+                int quantum2 = scanner.nextInt();
+                test.RRwithPriority(quantum2);
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
-    
+
 }
