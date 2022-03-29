@@ -67,7 +67,6 @@ public class Queue {
             boolean noProcessTaken = true;
             for (Process process : processes) {
                 if (!process.finished && currentTime >= process.arrivalTime) {
-                    System.out.println("process priority:" + process.priority);
                     waitingTime += (currentTime - process.arrivalTime);
                     currentTime += process.burstTime;
                     process.finished = true;
@@ -76,17 +75,56 @@ public class Queue {
                     tasksFinished++;
                     break;
                 }
-                
+
             }
             if (noProcessTaken) {
                 idleTime++;
                 currentTime++;
-            } 
+            }
         }
 
         // GET RESULTS
         System.out.println("Average waiting time: " + (waitingTime / numberOfTasks));
         System.out.println("Idle Time: " + idleTime);
 
+    }
+
+    // ROUND ROBIN ALGORITHM
+    public void RR(int Quantum) {
+        int numberOfTasks = processes.length;
+
+        // Check whether all process are finished
+        while (tasksFinished < numberOfTasks) {
+            // LOOP THROUGH EACH PROCESS
+            boolean processPicked = false;
+            for (Process process : processes) {
+                // MAKE SURE PROCESS ARRIVED AND NOT FINISHED YET
+                if ((process.arrivalTime <= currentTime) && process.burstTime > 0) {
+                    // PROCESS PICKED
+                    processPicked = true;
+                    // UPDATE WAITING TIME
+                    waitingTime += (currentTime - process.arrivalTime);
+                    // CPU WILL PROCESS AMOUNT OF TIME = MIN(Quantum, remaining burst time)
+                    int amountToBeProccessed = Math.min(Quantum, process.burstTime);
+                    // UPDATE CURRENT TIME AND Remaining burst time 
+                    currentTime += amountToBeProccessed;
+                    process.burstTime -= amountToBeProccessed;
+                    // UPDATE NEW ARRIVAL TIME
+                    process.arrivalTime = currentTime;
+                    // IF PROCESS DONE, UPDATE NUMBER OF FINISHED TASKS
+                    if (process.burstTime == 0) {
+                        tasksFinished++;
+                    }
+                }
+            }
+            // IF no process arrived yet, increase idle time and current time
+            if (!processPicked) {
+                idleTime++;
+                currentTime++;
+            }
+        }
+        // GET RESULTS
+        System.out.println("Average waiting time: " + (waitingTime / numberOfTasks));
+        System.out.println("Idle Time: " + idleTime);
     }
 }
