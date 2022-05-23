@@ -44,10 +44,11 @@ public class CpuScheduingAlgorithm {
             
             while ((sCurrentLine = br.readLine()) != null) {
                 String a[] = sCurrentLine.split(",");
+                int processId = new Integer(a[0]);
                 int arrivalTime = new Integer(a[1]);
                 int cpuTime = new Integer(a[2]);
                 int priority = new Integer(a[3]);
-                Process job = new Process(arrivalTime, cpuTime, priority);
+                Process job = new Process(processId, arrivalTime, cpuTime, priority);
                 jobList.add(job);
                 //System.out.println(processId+" "+ arrivalTime+" " + cpuTime);
             }
